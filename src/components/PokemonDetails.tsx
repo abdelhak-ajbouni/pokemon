@@ -13,8 +13,6 @@ export default function PokemonDetails({ }: Props) {
   const currentPokemon = useAppSelector(selectSinglePokemon);
   const { types, moves, abilities } = currentPokemon || {};
 
-  console.log('currentPokemon =========================', currentPokemon)
-
   return (
     <div>
       {

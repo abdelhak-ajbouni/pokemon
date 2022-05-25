@@ -37,7 +37,7 @@ export default function PokemonList({ onChangePagination }: Props) {
     <div>
       <ul className='border'>
         {allPokemon?.map(({ name }, index) => (
-          <li key={name} className={cn(
+          <li id={name} key={name} className={cn(
             'text-neutral-800 py-2 px-4 flex justify-between items-center',
             index % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'
           )}>

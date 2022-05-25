@@ -18,7 +18,7 @@ export default function PokemonCapturedList({ }: Props) {
       </li>
       {
         myPokemon.map((pokemon, index) => (
-          <li key={pokemon.name} className={cn(
+          <li id={pokemon.name} key={pokemon.name} className={cn(
             'text-neutral-800 py-2 px-4 flex justify-between items-center',
             index % 2 === 0 ? 'bg-gray-50' : 'bg-gray-100'
           )}>
