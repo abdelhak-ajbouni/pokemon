@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 import cn from 'classnames'
 
 import Container from 'src/components/common/Container'
-import Modal from 'src/components/common/Modal'
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import { loadMyPokemon, selectMyPokemon } from 'src/utils/slices/pokemon';
 import PokemonCapturedList from 'src/components/PokemonCapturedList'
@@ -42,8 +41,6 @@ const Captured: NextPage = ({ }) => {
         </h1>
         <PokemonCapturedList />
       </Container>
-
-      <Modal></Modal>
     </div>
   )
 }

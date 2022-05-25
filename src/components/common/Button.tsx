@@ -40,6 +40,7 @@ type Props = {
   type?: "submit" | "button" | "reset" | undefined;
   loading?: boolean;
   disabled?: boolean;
+  secondary?: boolean;
   onClick?: () => void;
   children?: React.ReactNode;
 }
