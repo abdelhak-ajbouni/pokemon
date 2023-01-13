@@ -8,14 +8,14 @@ export default function Container({ className, classNameContent, title, actions,
   return (
     <div className={cn(
       className,
-      "mx-auto my-4",
+      "mx-auto",
       fluid ? "container-fluid" : "container",
       hasShadow && "shadow-md shadow-gray-100"
     )}>
       {
         hasHeader && (
           <>
-            <div className="flex justify-between items-center my-4 mx-2">
+            <div className="flex justify-between items-center py-4 px-2 bg-gray-300">
               <div className="flex justify-start items-center ">
 
                 {onGoBack && (

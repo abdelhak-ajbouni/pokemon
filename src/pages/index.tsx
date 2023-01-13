@@ -4,15 +4,18 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import cn from 'classnames'
+import 'animate.css';
 
 import Container from 'src/components/common/Container'
 import Button from 'src/components/common/Button'
+import Slider from 'src/components/common/Slider'
 import PokemonList from 'src/components/PokemonList'
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import {
   getAllPokemon,
   selectMyPokemon
 } from 'src/utils/slices/pokemon';
+import PokemonSearch from 'src/components/PokemonSearch'
 
 const Home: NextPage = () => {
   const myPokemon = useAppSelector(selectMyPokemon);
@@ -49,7 +52,18 @@ const Home: NextPage = () => {
         )}>
           Gotta Catch &apos;Em All!
         </h1>
+        <PokemonSearch />
         <PokemonList onChangePagination={(pagination) => dispatch(getAllPokemon(pagination))} />
+
+        {/* <Slider items={[
+          <div className="bg-red-500 p-9">1</div>,
+          <div className="bg-red-500">2</div>,
+          <div className="bg-red-500">3</div>,
+          <div className="bg-red-500">4</div>,
+          <div className="bg-red-500">5</div>
+        ]}>
+        </Slider> */}
+
       </Container>
     </div>
   )

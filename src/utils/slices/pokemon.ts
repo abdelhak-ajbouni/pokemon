@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { RootState } from '../store';
-import { fetchAllPokemon, fetchSinglePokemon } from '../apis';
+import { fetchAllPokemon, fetchSinglePokemon, fetchRandomPokemon } from '../apis';
 
 const initialState: PokemonState = {
   allPokemon: [],
   myPokemon: [],
   currentPokemon: null,
+  randomPokemon: null,
   status: 'idle',
 };
 
@@ -22,6 +23,14 @@ export const getSinglePokemon = createAsyncThunk(
   'pokemon/fetchSinglePokemon',
   async (name: string) => {
     const response: any = await fetchSinglePokemon(name)
+    return response;
+  }
+);
+
+export const getRandomPokemon = createAsyncThunk(
+  'pokemon/fetchRandomPokemon',
+  async () => {
+    const response: any = await fetchRandomPokemon();
     return response;
   }
 );
@@ -63,6 +72,11 @@ export const pokemonSlice = createSlice({
       .addCase(getSinglePokemon.fulfilled, (state, action) => {
         state.status = 'idle';
         state.currentPokemon = action.payload;
+      }).addCase(getRandomPokemon.pending, (state) => {
+        state.status = 'loading';
+      }).addCase(getRandomPokemon.fulfilled, (state, action) => {
+        state.status = 'idle';
+        state.randomPokemon = action.payload;
       });
   },
 });
@@ -70,6 +84,7 @@ export const pokemonSlice = createSlice({
 export const selectAllPokemon = (state: RootState) => state.pokemon.allPokemon;
 export const selectMyPokemon = (state: RootState) => state.pokemon.myPokemon;
 export const selectSinglePokemon = (state: RootState) => state.pokemon.currentPokemon;
+export const selectRandomPokemon = (state: RootState) => state.pokemon.randomPokemon;
 export const selectPokemonStatus = (state: RootState) => state.pokemon.status;
 
 export const { capturePokemon, releasePokemon, loadMyPokemon } = pokemonSlice.actions;
@@ -79,9 +94,11 @@ export interface PokemonState {
   allPokemon: Pokemon[];
   myPokemon: PokemonCaptured[];
   currentPokemon: Pokemon | null;
+  randomPokemon: Pokemon | null;
   status: 'idle' | 'loading' | 'failed';
 }
 export interface Pokemon {
+  id: number;
   name: string;
   base_experience: string;
   weight: number;
@@ -102,6 +119,13 @@ export interface Pokemon {
   }[],
   abilities: {
     ability: {
+      name: string;
+    }
+  }[]
+  stats: {
+    base_stat: number;
+    effort: number;
+    stat: {
       name: string;
     }
   }[]
