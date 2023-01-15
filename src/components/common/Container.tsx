@@ -21,7 +21,7 @@ export default function Container({ className, classNameContent, title, actions,
                 {onGoBack && (
                   <IoMdArrowRoundBack className="bg-neutral-200 p-1 rounded-full mr-4 cursor-pointer" size={28} onClick={onGoBack} />
                 )}
-                {title && <h2 className="text-neutral-800 text-2xl font-bold decoration-dashed underline decoration-cyan-500">{title}</h2>}
+                {title && <h2 className="text-neutral-800 text-2xl font-bold">{title}</h2>}
               </div>
               {actions && <div>{actions}</div>}
             </div>

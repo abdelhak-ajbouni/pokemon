@@ -1,11 +1,6 @@
-import axios from 'axios';
+import axios from "axios";
+import configs from "src/utils/configs";
 
-const instance = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2',
-  timeout: 1000,
-  headers: {
-    "Content-Type": "application/json",
-  }
-});
+const instance = axios.create(configs.axios);
 
-export default instance
+export default instance;

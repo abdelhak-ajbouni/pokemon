@@ -21,6 +21,7 @@
 
 # debug
 *.log*
+log.txt
 
 # local env files
 .env*.local
