@@ -7,51 +7,53 @@ import cn from 'classnames'
 
 import Container from 'src/components/common/Container'
 import Button from 'src/components/common/Button'
-import PokemonList from 'src/components/PokemonList'
 import { useAppDispatch, useAppSelector } from 'src/hooks';
 import {
-  getAllPokemon,
-  selectMyPokemon
+  getAllCapturedPokemon,
+  selectCapturedPokemon,
+  capturePokemon
 } from 'src/utils/slices/pokemon';
 
 const Home: NextPage = () => {
-  const myPokemon = useAppSelector(selectMyPokemon);
+  const capturedPokemon = useAppSelector(selectCapturedPokemon);
   const dispatch = useAppDispatch();
   const router = useRouter()
 
   useEffect(() => {
     (() => {
-      dispatch(getAllPokemon({ limit: 10, offset: 0 }));
+      dispatch(getAllCapturedPokemon())
     })();
   }, []);
 
   return (
-    <div>
+    <>
       <Head>
         <title>Home</title>
         <meta name="description" content="home page" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container
-        title='Home'
-        actions={
-          <Button
-            label={'Your Pokemon List (' + myPokemon.length + ")"}
-            onClick={() => router.push("/pokemon/captured")}
-          />
-        }
-      >
-        <h1 className={cn(
-          'text-neutral-800 font-bold decoration-dashed underline decoration-cyan-500',
-          'text-center mt-10 mb-8',
-          "text-3xl md:text-5xl"
-        )}>
-          Gotta Catch &apos;Em All!
-        </h1>
-        <PokemonList onChangePagination={(pagination) => dispatch(getAllPokemon(pagination))} />
-      </Container>
-    </div>
+      <main>
+        <Container
+          title='Home'
+          actions={
+            <Button
+              label={'Your Pokemon List (' + capturedPokemon.length + ")"}
+              onClick={() => router.push("/pokemon/captured")}
+            />
+          }
+        >
+          <h1 className={cn(
+            'text-neutral-800 font-bold decoration-dashed underline decoration-cyan-500',
+            'text-center mt-10 mb-8',
+            "text-3xl md:text-5xl"
+          )}>
+            Gotta Catch &apos;Em All!
+          </h1>
+          <Button onClick={() => dispatch(capturePokemon({ id: 'cc', name: "dd", }))}>sss</Button>
+        </Container>
+      </main >
+    </>
   )
 }
 
