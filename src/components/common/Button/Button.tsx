@@ -1,6 +1,6 @@
 import React from "react"
 import cn from "classnames"
-import { FiRefreshCcw } from "react-icons/fi"
+import { AiOutlineLoading } from "react-icons/ai"
 
 export default function Button({ className, label, type, secondary, loading, disabled, onClick, children }: Props) {
 
@@ -8,17 +8,19 @@ export default function Button({ className, label, type, secondary, loading, dis
     <button
       className={cn(
         className,
-        "button border rounded py-1 px-2 transition duration-200 ease-in-out cursor-pointer",
-        "text-white text-sm hover:bg-blue-400",
-        secondary ? "text-gray-500 hover:text-gray-400" : "text-white bg-blue-500",
+        "button py-1 px-2 border rounded transition duration-200 ease-in-out cursor-pointer",
+        "text-sm hover:bg-blue-400",
+        secondary ? "text-blue-500 border-blue-500 hover:text-white" : "text-white bg-blue-500 ",
         loading && "loading",
         disabled && "cursor-not-allowed opacity-60"
       )}
       type={type}
       disabled={loading || disabled}
       onClick={onClick}
+      data-testid='button'
+      aria-label="button"
     >
-      {loading ? <FiRefreshCcw className='animate-spin mx-4' /> : children || label}
+      {loading ? <AiOutlineLoading className='animate-spin mx-4 block' /> : children || label}
     </button>
   );
 }
