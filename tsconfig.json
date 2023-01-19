@@ -16,8 +16,14 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
-    "types": ["cypress"]
+    "types": ["node", "jest", "@testing-library/jest-dom", "cypress"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "jest.config.js",
+    "jest.setup.js"
+  ],
   "exclude": ["node_modules"]
 }
