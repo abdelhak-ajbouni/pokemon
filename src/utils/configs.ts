@@ -1,6 +1,9 @@
 import { Configs } from "./types";
 
 const configs: Configs = {
+  app: {
+    mode: process.env.NODE_ENV || "development",
+  },
   db: {
     host: "http://127.0.0.1:5984/pokemon",
   },

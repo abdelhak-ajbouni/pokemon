@@ -3,6 +3,9 @@ import PouchDB from "pouchdb";
 
 // App
 export interface Configs {
+  app: {
+    mode: "development" | "test" | "production";
+  };
   db: {
     host: string;
   };
