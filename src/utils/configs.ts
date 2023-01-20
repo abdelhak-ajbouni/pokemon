@@ -5,7 +5,7 @@ const configs: Configs = {
     mode: process.env.NODE_ENV || "development",
   },
   db: {
-    host: "http://127.0.0.1:5984/pokemon",
+    host: "http://127.0.0.1:5984/_pokemon",
   },
   pouchDB: {
     revs_limit: 1,

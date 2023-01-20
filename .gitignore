@@ -36,3 +36,4 @@ log.txt
 *.pouchdb
 pouch__all_dbs__
 *.ldb
+_*/
