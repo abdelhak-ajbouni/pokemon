@@ -16,13 +16,13 @@ export interface Configs {
 // Pokemon
 export interface PokemonState {
   status: "idle" | "loading" | "failed";
+  randomPokemon: Pokemon | null;
   currentPokemon: Pokemon | null;
-  capturedPokemon: Pokemon[];
-  currentCapturedPokemon: Pokemon | null;
+  allCapturedPokemon: Pokemon[];
 }
 
 export interface Pokemon {
-  id:string;
+  id: string;
   name: string;
   base_experience: string;
   weight: number;
@@ -30,6 +30,12 @@ export interface Pokemon {
   sprites: {
     front_default: string;
   };
+  stats: {
+    base_stat: number;
+    stat: {
+      name: string;
+    };
+  }[];
   // types: {
   //   slot: number;
   //   type: {

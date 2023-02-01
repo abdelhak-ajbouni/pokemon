@@ -11,9 +11,9 @@ import { Pokemon, PokemonState } from "../types";
 
 const initialState: PokemonState = {
   status: "idle",
+  randomPokemon: null,
   currentPokemon: null,
-  capturedPokemon: [],
-  currentCapturedPokemon: null,
+  allCapturedPokemon: [],
 };
 
 export const getAllPokemon = createAsyncThunk(
@@ -60,9 +60,9 @@ export const getSingleCapturedPokemon = createAsyncThunk(
 );
 
 export const getRandomPokemon = createAsyncThunk(
-  'pokemon/fetchRandomPokemon',
+  "pokemon/getRandomPokemon",
   async () => {
-    const response: any = await fetchRandomPokemon();
+    const response: any = await api.fetchRandomPokemon();
     return response;
   }
 );
@@ -71,6 +71,12 @@ export const pokemonSlice = createSlice({
   name: "pokemon",
   initialState,
   reducers: {
+    hydrate: (state, action: PayloadAction<PokemonState>) => {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
     //   capturePokemon: (state, action: PayloadAction<PokemonCaptured>) => {
     //     const localPokemon = JSON.parse(localStorage.getItem("pokemon") || "[]");
     //     if (
@@ -99,13 +105,17 @@ export const pokemonSlice = createSlice({
         state.status = "idle";
         state.currentPokemon = action.payload;
       })
+      .addCase(getRandomPokemon.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.randomPokemon = action.payload;
+      })
       .addCase(capturePokemon.fulfilled, (state, action) => {
         state.status = "idle";
-        state.capturedPokemon = [];
+        state.currentPokemon = action.payload;
       })
       .addCase(getAllCapturedPokemon.fulfilled, (state, action) => {
         state.status = "idle";
-        state.capturedPokemon = [];
+        state.allCapturedPokemon = action.payload;
       })
       .addCase(getSingleCapturedPokemon.fulfilled, (state, action) => {
         state.status = "idle";
@@ -114,6 +124,7 @@ export const pokemonSlice = createSlice({
       .addMatcher(
         isAnyOf(
           getSinglePokemon.pending,
+          getRandomPokemon.pending,
           getAllCapturedPokemon.pending,
           getSingleCapturedPokemon.pending,
           capturePokemon.pending
@@ -125,10 +136,10 @@ export const pokemonSlice = createSlice({
   },
 });
 
-export const selectCapturedPokemon = (state: RootState) =>
-  state.pokemon.capturedPokemon;
-export const selectCurrentCapturedPokemon = (state: RootState) =>
-  state.pokemon.currentCapturedPokemon;
+export const selectAllCapturedPokemon = (state: RootState) =>
+  state.pokemon.allCapturedPokemon;
+export const selectRandomPokemon = (state: RootState) =>
+  state.pokemon.randomPokemon;
 export const selectPokemonStatus = (state: RootState) => state.pokemon.status;
 
 // export const {} = pokemonSlice.actions;

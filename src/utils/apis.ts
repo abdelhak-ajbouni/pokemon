@@ -1,5 +1,5 @@
 import axios from "./axios";
-import { catchWrapper, generateDoc } from "./functions";
+import { generateDoc } from "./functions";
 import db from "./pouchdb";
 import { Pokemon } from "./types";
 
@@ -21,6 +21,12 @@ export const fetchSinglePokemon = async (name: string) => {
   return res.data;
 };
 
+export const fetchRandomPokemon = async () => {
+  const randomId = Math.floor(Math.random() * 1150) + 1;
+  const res = await axios.get(`/pokemon/${randomId}`);
+  return res.data;
+};
+
 export const capturePokemon = async (pokemon: Pokemon) => {
   const doc = generateDoc(pokemon);
   const res = await db.put(doc).catch((err) => {
@@ -31,7 +37,7 @@ export const capturePokemon = async (pokemon: Pokemon) => {
 
 export const getAllCapturedPokemon = async () => {
   const res = await db.allDocs({ include_docs: true });
-  return res;
+  return res.rows;
 };
 
 export const getSingleCapturedPokemon = async (id: string) => {

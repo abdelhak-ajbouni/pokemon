@@ -1,9 +1,21 @@
 import Image from 'next/image'
+import { useEffect } from 'react';
 import { MdOutlineCatchingPokemon } from 'react-icons/md';
-import { Pokemon } from 'src/utils/slices/pokemon';
+import useSound from 'src/hooks/useSound';
+import { Pokemon } from 'src/utils/types';
 
 export default function PokemonCapturedList({ data }: Props) {
   const { name, sprites, stats } = data || {};
+  const [isPlaying, play, stop] = useSound('/sounds/coin.mp3', { delay: 500 });
+
+  useEffect(() => {
+    if (!isPlaying) {
+      play();
+    } else {
+      stop();
+      play();
+    }
+  }, []);
 
   const pokemonScore = stats?.reduce((acc, { base_stat }) => acc + base_stat, 0) || 0;
   const getScoreTagColor = (score: number) => {
