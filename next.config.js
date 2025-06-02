@@ -4,6 +4,13 @@ const nextConfig = {
   swcMinify: false,
   experimental: {
     forceSwcTransforms: false
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@swc/helpers': require.resolve('@swc/helpers')
+    }
+    return config
   }
 }
 

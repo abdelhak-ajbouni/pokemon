@@ -17,9 +17,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.6.2",
-    "@next/swc-linux-x64-gnu": "12.1.4",
-    "@next/swc-linux-x64-musl": "12.1.4",
     "@reduxjs/toolkit": "^1.8.1",
+    "@swc/helpers": "^0.5.3",
     "animate.css": "^4.1.1",
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
