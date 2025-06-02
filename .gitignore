@@ -37,3 +37,4 @@ log.txt
 pouch__all_dbs__
 *.ldb
 _*/
+.env
