@@ -1,5 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
 
 import Button from 'src/components/common/Button'
 import { useAppSelector, useAppDispatch } from 'src/hooks';
@@ -36,9 +35,14 @@ export default function PokemonInfo({ }: Props) {
 
   return (
     <div className='flex flex-col m-2 md:flex-row'>
-
       <div className='border-2 text-center rounded'>
-        <Image src={sprites?.front_default || "/default.png"} alt={name} width={150} height={150} />
+        <img 
+          src={sprites?.front_default || "/default.png"} 
+          alt={name} 
+          width={150} 
+          height={150} 
+          style={{ width: '150px', height: '150px' }}
+        />
       </div>
       <div className='py-2 px-4'>
         <h2><span className='font-bold'>Name:</span> {name}</h2>
