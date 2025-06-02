@@ -1,44 +1,31 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import Container from '../../components/common/Container'
+import Modal from '../../components/common/Modal'
+import PokemonDetails from '../../components/PokemonDetails'
+import PokemonInfo from '../../components/PokemonInfo'
+import { useAppDispatch } from '../../hooks'
+import { getSinglePokemon } from '../../utils/slices/pokemon'
 
-import Container from 'src/components/common/Container'
-import Modal from 'src/components/common/Modal'
-import PokemonDetails from 'src/components/PokemonDetails'
-import PokemonInfo from 'src/components/PokemonInfo'
-import { useAppDispatch } from 'src/hooks';
-import { getSinglePokemon } from 'src/utils/slices/pokemon';
-
-
-const Home: NextPage = ({ }) => {
-  const dispatch = useAppDispatch();
-  const router = useRouter()
-  const { pokemonName } = router.query
+export default function PokemonDetailsPage() {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const { pokemonName } = useParams()
 
   useEffect(() => {
-    (() => {
-      if (pokemonName) dispatch(getSinglePokemon(pokemonName as string));
-    })();
-  }, [pokemonName]);
+    if (pokemonName) {
+      dispatch(getSinglePokemon(pokemonName))
+    }
+  }, [pokemonName, dispatch])
 
   return (
     <div>
-      <Head>
-        <title>{pokemonName}</title>
-        <meta name="description" content={pokemonName + " page"} />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Container title={pokemonName as string} onGoBack={() => router.push('/')}>
+      <Container title={pokemonName} onGoBack={() => navigate('/')}>
         <PokemonInfo />
         <PokemonDetails />
       </Container>
 
-      <Modal name={pokemonName as string}></Modal>
+      <Modal name={pokemonName || ''} />
     </div>
   )
 }
-
-export default Home
