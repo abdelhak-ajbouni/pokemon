@@ -141,6 +141,8 @@ export const selectAllCapturedPokemon = (state: RootState) =>
 export const selectRandomPokemon = (state: RootState) =>
   state.pokemon.randomPokemon;
 export const selectPokemonStatus = (state: RootState) => state.pokemon.status;
+export const selectSinglePokemon = (state: RootState) => 
+  state.pokemon.currentPokemon;
 
 // export const {} = pokemonSlice.actions;
 export default pokemonSlice.reducer;
