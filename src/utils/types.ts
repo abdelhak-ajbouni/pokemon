@@ -22,6 +22,8 @@ export interface PokemonState {
 }
 
 export interface Pokemon {
+  _id?: string;
+  _rev?: string;
   id: string;
   name: string;
   base_experience: string;
@@ -36,20 +38,20 @@ export interface Pokemon {
       name: string;
     };
   }[];
-  // types: {
-  //   slot: number;
-  //   type: {
-  //     name: string;
-  //   };
-  // }[];
-  // moves: {
-  //   move: {
-  //     name: string;
-  //   };
-  // }[];
-  // abilities: {
-  //   ability: {
-  //     name: string;
-  //   };
-  // }[];
+  types: {
+    slot: number;
+    type: {
+      name: string;
+    };
+  }[];
+  moves: {
+    move: {
+      name: string;
+    };
+  }[];
+  abilities: {
+    ability: {
+      name: string;
+    };
+  }[];
 }

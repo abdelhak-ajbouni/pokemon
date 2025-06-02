@@ -43,6 +43,14 @@ export const capturePokemon = createAsyncThunk(
   }
 );
 
+export const releasePokemon = createAsyncThunk(
+  "pokemon/releasePokemon",
+  async (pokemon: Pokemon) => {
+    const response = await api.releasePokemonFromDb(pokemon);
+    return pokemon;
+  }
+);
+
 export const getAllCapturedPokemon = createAsyncThunk(
   "pokemon/getAllCapturedPokemon",
   async () => {
@@ -77,27 +85,6 @@ export const pokemonSlice = createSlice({
         ...action.payload,
       };
     },
-    //   capturePokemon: (state, action: PayloadAction<PokemonCaptured>) => {
-    //     const localPokemon = JSON.parse(localStorage.getItem("pokemon") || "[]");
-    //     if (
-    //       !localPokemon.find((el: Pokemon) => el.name === action.payload.name)
-    //     ) {
-    //       const newLocalPokemon = [...localPokemon, action.payload];
-    //       localStorage.setItem("pokemon", JSON.stringify(newLocalPokemon));
-    //       state.myPokemon = newLocalPokemon;
-    //     }
-    //   },
-    //   releasePokemon: (state, action: PayloadAction<PokemonCaptured>) => {
-    //     const localPokemon = JSON.parse(localStorage.getItem("pokemon") || "[]");
-    //     const newLocalPokemon = localPokemon.filter(
-    //       (el: Pokemon) => el.name !== action.payload.name
-    //     );
-    //     localStorage.setItem("pokemon", JSON.stringify(newLocalPokemon));
-    //     state.myPokemon = newLocalPokemon;
-    //   },
-    //   loadMyPokemon: (state, action: PayloadAction) => {
-    //     state.myPokemon = JSON.parse(localStorage.getItem("pokemon") || "[]");
-    //   },
   },
   extraReducers: (builder) => {
     builder
@@ -111,7 +98,15 @@ export const pokemonSlice = createSlice({
       })
       .addCase(capturePokemon.fulfilled, (state, action) => {
         state.status = "idle";
-        state.currentPokemon = action.payload;
+        if (action.payload) {
+          state.allCapturedPokemon = [...state.allCapturedPokemon, action.payload];
+        }
+      })
+      .addCase(releasePokemon.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.allCapturedPokemon = state.allCapturedPokemon.filter(
+          pokemon => pokemon._id !== action.payload._id
+        );
       })
       .addCase(getAllCapturedPokemon.fulfilled, (state, action) => {
         state.status = "idle";
@@ -127,7 +122,8 @@ export const pokemonSlice = createSlice({
           getRandomPokemon.pending,
           getAllCapturedPokemon.pending,
           getSingleCapturedPokemon.pending,
-          capturePokemon.pending
+          capturePokemon.pending,
+          releasePokemon.pending
         ),
         (state) => {
           state.status = "loading";
@@ -143,6 +139,8 @@ export const selectRandomPokemon = (state: RootState) =>
 export const selectPokemonStatus = (state: RootState) => state.pokemon.status;
 export const selectSinglePokemon = (state: RootState) => 
   state.pokemon.currentPokemon;
+export const selectMyPokemon = (state: RootState) =>
+  state.pokemon.allCapturedPokemon;
 
-// export const {} = pokemonSlice.actions;
+export const { hydrate } = pokemonSlice.actions;
 export default pokemonSlice.reducer;

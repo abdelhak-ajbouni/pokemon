@@ -35,9 +35,19 @@ export const capturePokemon = async (pokemon: Pokemon) => {
   return res;
 };
 
+export const releasePokemonFromDb = async (pokemon: Pokemon) => {
+  if (!pokemon._id || !pokemon._rev) {
+    throw new Error('Cannot release pokemon without _id and _rev');
+  }
+  const res = await db.remove(pokemon._id, pokemon._rev).catch((err) => {
+    console.log(err);
+  });
+  return res;
+};
+
 export const getAllCapturedPokemon = async () => {
   const res = await db.allDocs({ include_docs: true });
-  return res.rows;
+  return res.rows.map(row => row.doc as Pokemon);
 };
 
 export const getSingleCapturedPokemon = async (id: string) => {
